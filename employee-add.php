@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!is_dir($target_dir)) mkdir($target_dir);
         $target_file = $target_dir . time() . "_" . basename($_FILES["photo"]["name"]);
         move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file);
-<<<<<<< HEAD
         // Delete old photo file if it exists and a new one is being uploaded
         if (!empty($employee['photo']) && file_exists($employee['photo'])) {
             unlink($employee['photo']);
@@ -55,14 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = (int)$_POST['id'];
         $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', email='$email', phone='$phone', department='$department', designation='$designation', gender='$gender', doj='$doj', dob='$dob', salary='$salary', address='$address', password='$hashed_password', photo='$photo' WHERE id=$id";
-=======
-        $photo = $target_file;
-    }
-
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        $id = (int)$_POST['id'];
-        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', email='$email', phone='$phone', department='$department', designation='$designation', gender='$gender', doj='$doj', dob='$dob', salary='$salary', address='$address', password='$password', photo='$photo' WHERE id=$id";
->>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
         mysqli_query($conn, $sql);
     } else {
         $res = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM employees");
@@ -71,11 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emp_id = "EMP" . str_pad($next_id, 3, "0", STR_PAD_LEFT);
 
         $sql = "INSERT INTO employees (emp_id, first_name, last_name, email, phone, department, designation, gender, doj, dob, salary, address, password, photo) 
-<<<<<<< HEAD
                 VALUES ('$emp_id', '$first_name', '$last_name', '$email', '$phone', '$department', '$designation', '$gender', '$doj', '$dob', '$salary', '$address', '$hashed_password', '$photo')";
-=======
-                VALUES ('$emp_id', '$first_name', '$last_name', '$email', '$phone', '$department', '$designation', '$gender', '$doj', '$dob', '$salary', '$address', '$password', '$photo')";
->>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
         mysqli_query($conn, $sql);
     }
     
