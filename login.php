@@ -1,3 +1,35 @@
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+require 'db.php';
+$error_msg = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM employees WHERE email='$email'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['username'] = $row['first_name'];
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            $error_msg = "Invalid email or password.";
+        }
+    } else if (($email == 'admin@email.com' && $password == 'Admin@123') || ($email == 'hr@email.com' && $password == 'Hr@123')) {
+        $_SESSION['username'] = ($email == 'admin@email.com') ? 'Admin' : 'HR';
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $error_msg = "Invalid email or password.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,13 +53,13 @@
     <nav class="navbar navbar-dark bg-primary">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand" href="login.html">
+            <a class="navbar-brand" href="login.php">
                 <img src="images/employee.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
                 <strong>Employee Portal</strong>
             </a>
 
             <div class="d-flex gap-3 align-items-center">
-                <a href="#" id="id29" style = "color: white; text-decoration: none;">Logout</a>
+                <a href="logout.php" id="id29" style = "color: white; text-decoration: none;">Logout</a>
             </div>
         </div>
     </nav>
@@ -37,14 +69,14 @@
 
             <h2>Employee Login</h2>
 
-            <div id="id19" class="alert alert-danger d-none" role="alert"></div>
+            <div id="id19" class="alert alert-danger <?php echo empty($error_msg) ? 'd-none' : ''; ?>" role="alert"><?php echo $error_msg; ?></div>
 
-            <form id="id18">
+            <form id="id18" method="POST" action="login.php">
 
                 <label for="id01">Email</label>
 
                 <input type="text"
-                       id="id01"
+                       id="id01" name="email"
                        class="class03"
                        placeholder="Enter email"
                        required>
@@ -56,7 +88,7 @@
                 <div class="class16">
 
                     <input type="password"
-                           id="id02"
+                           id="id02" name="password"
                            class="class03"
                            placeholder="Enter password"
                            required>
@@ -83,7 +115,7 @@
 
             <p class="class06"> Don't have an account?
 
-                <a href="employee-add.html">Register</a>
+                <a href="employee-add.php">Register</a>
 
             </p>
 

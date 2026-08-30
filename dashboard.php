@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,15 +29,15 @@
 
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand" href="dashboard.html">
+            <a class="navbar-brand" href="dashboard.php">
                 <img src="images/employee.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
                 <strong>Employee Portal</strong>
             </a>
 
 
             <div class="d-flex gap-3 align-items-center">
-                <span id="id28" style="color: white; margin-right: 15px;"></span>
-                <a href="#" id="id29" style = "color: white; text-decoration: none;">Logout</a>
+                <span id="id28" style="color: white; margin-right: 15px;">Hi, <?php echo htmlspecialchars($_SESSION["username"]); ?></span>
+                <a href="logout.php" id="id29" style = "color: white; text-decoration: none;">Logout</a>
             </div>
 
         </div>
@@ -45,8 +52,8 @@
             <img src="images/dashboard image.png" alt="Dashboard Image" class="img-fluid mb-4" style="max-height: 300px;">
             <h2>Welcome</h2>
             
-            <a href="employee-list.html" class="class05" style="text-decoration: none;">View Employees</a>
-            <a href="employee-add.html" class="class11" style="text-decoration: none; margin-left: 10px;">Add Employee</a>
+            <a href="employee-list.php" class="class05" style="text-decoration: none;">View Employees</a>
+            <a href="employee-add.php" class="class11" style="text-decoration: none; margin-left: 10px;">Add Employee</a>
 
         </div>
 
