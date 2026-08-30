@@ -8,6 +8,7 @@ require 'db.php';
 
 if (isset($_GET['delete'])) {
     $id = (int)$_GET['delete'];
+<<<<<<< HEAD
     // Fetch the photo path before deleting the record
     $photo_result = mysqli_query($conn, "SELECT photo FROM employees WHERE id=$id");
     if ($photo_result && $photo_row = mysqli_fetch_assoc($photo_result)) {
@@ -15,6 +16,8 @@ if (isset($_GET['delete'])) {
             unlink($photo_row['photo']);
         }
     }
+=======
+>>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
     mysqli_query($conn, "DELETE FROM employees WHERE id=$id");
     header("Location: employee-list.php");
     exit();

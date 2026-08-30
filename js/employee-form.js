@@ -254,9 +254,13 @@ function attachValidationListeners() {
     document.getElementById("id12").addEventListener("blur", validateAddress);
     document.getElementById("id13").addEventListener("blur", validatePassword);
     document.getElementById("id14").addEventListener("blur", validateConfirmPassword);
+<<<<<<< HEAD
     if (!isEditMode) {
         document.getElementById("id15").addEventListener("change", validateTerms);
     }
+=======
+    document.getElementById("id15").addEventListener("change", validateTerms);
+>>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
 }
 
 function attachSalaryFormatting() {
@@ -292,6 +296,10 @@ function attachPhotoListener() {
 }
 
 function handleSubmit(event) {
+<<<<<<< HEAD
+=======
+    let termsValid = validateTerms();
+>>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
     let validations = [
         validateFirstName(),
         validateLastName(),
@@ -307,9 +315,12 @@ function handleSubmit(event) {
         validatePassword(),
         validateConfirmPassword()
     ];
+<<<<<<< HEAD
     if (!isEditMode) {
         validations.push(validateTerms());
     }
+=======
+>>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
     let allValid = validations.every(function(result) {
         return result === true;
     });

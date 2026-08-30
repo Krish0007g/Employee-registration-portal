@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
 
+<<<<<<< HEAD
     $sql = "SELECT * FROM employees WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
@@ -21,6 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $error_msg = "Invalid email or password.";
         }
+=======
+    $sql = "SELECT * FROM employees WHERE email='$email' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['username'] = $row['first_name'];
+        header("Location: dashboard.php");
+        exit();
+>>>>>>> 88dfad572db11cb612dd050be2a3221b8d22fe1f
     } else if (($email == 'admin@email.com' && $password == 'Admin@123') || ($email == 'hr@email.com' && $password == 'Hr@123')) {
         $_SESSION['username'] = ($email == 'admin@email.com') ? 'Admin' : 'HR';
         header("Location: dashboard.php");
